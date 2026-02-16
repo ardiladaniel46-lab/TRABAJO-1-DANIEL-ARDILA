@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Selection Sort Original</title>
+
+<style>
+body{
+    font-family: Arial;
+    text-align:center;
+    background:#f4f4f4;
+}
+
+.contenedor{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin:20px;
+}
+
+.numero{
+    width:50px;
+    height:50px;
+    background:#f7e26b;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+    border-radius:5px;
+    box-shadow:2px 2px 5px gray;
+}
+
+.info{
+    margin:15px;
+    font-size:18px;
+}
+
+button{
+    padding:10px 20px;
+    font-size:16px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Selection Sort - ORIGINAL</h2>
+
+<div class="info">
+Pasadas: <span id="pasadas">0</span> |
+Comparaciones: <span id="comparaciones">0</span>
+</div>
+
+<div class="contenedor" id="array"></div>
+
+<button onclick="ordenar()">Ejecutar</button>
+
+<script>
+
+let numeros = [16,4,50,25,7,81,31,32,40,10];
+let comparaciones = 0;
+let pasadas = 0;
+
+function mostrar(){
+    let cont = document.getElementById("array");
+    cont.innerHTML="";
+    numeros.forEach(n=>{
+        let div = document.createElement("div");
+        div.className="numero";
+        div.textContent=n;
+        cont.appendChild(div);
+    });
+}
+
+function actualizar(){
+    document.getElementById("pasadas").textContent=pasadas;
+    document.getElementById("comparaciones").textContent=comparaciones;
+}
+
+async function ordenar(){
+
+    for(let i=0;i<numeros.length-1;i++){
+        pasadas++;
+        let min=i;
+
+        for(let j=i+1;j<numeros.length;j++){
+            comparaciones++;
+            if(numeros[j]<numeros[min]){
+                min=j;
+            }
+        }
+
+        let temp=numeros[i];
+        numeros[i]=numeros[min];
+        numeros[min]=temp;
+
+        actualizar();
+        mostrar();
+
+        await new Promise(r=>setTimeout(r,800));
+    }
+}
+
+mostrar();
+
+</script>
+
+</body>
+</html>
