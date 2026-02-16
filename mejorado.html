@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Selection Sort Mejorado</title>
+
+<style>
+body{
+    font-family: Arial;
+    text-align:center;
+    background:#eef2ff;
+}
+
+.contenedor{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin:20px;
+}
+
+.numero{
+    width:50px;
+    height:50px;
+    background:#9ad0ec;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+    border-radius:5px;
+    box-shadow:2px 2px 5px gray;
+}
+
+.info{
+    margin:15px;
+    font-size:18px;
+}
+
+button{
+    padding:10px 20px;
+    font-size:16px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Selection Sort - MEJORADO</h2>
+
+<div class="info">
+Pasadas: <span id="pasadas">0</span> |
+Comparaciones: <span id="comparaciones">0</span>
+</div>
+
+<div class="contenedor" id="array"></div>
+
+<button onclick="ordenar()">Ejecutar</button>
+
+<script>
+
+let numeros = [16,4,50,25,7,81,31,32,40,10];
+let comparaciones = 0;
+let pasadas = 0;
+
+function mostrar(){
+    let cont = document.getElementById("array");
+    cont.innerHTML="";
+    numeros.forEach(n=>{
+        let div = document.createElement("div");
+        div.className="numero";
+        div.textContent=n;
+        cont.appendChild(div);
+    });
+}
+
+function actualizar(){
+    document.getElementById("pasadas").textContent=pasadas;
+    document.getElementById("comparaciones").textContent=comparaciones;
+}
+
+async function ordenar(){
+
+    let inicio=0;
+    let fin=numeros.length-1;
+
+    while(inicio<fin){
+        pasadas++;
+
+        let min=inicio;
+        let max=inicio;
+
+        for(let i=inicio;i<=fin;i++){
+            comparaciones++;
+
+            if(numeros[i]<numeros[min]) min=i;
+            if(numeros[i]>numeros[max]) max=i;
+        }
+
+        let temp=numeros[inicio];
+        numeros[inicio]=numeros[min];
+        numeros[min]=temp;
+
+        if(max===inicio) max=min;
+
+        temp=numeros[fin];
+        numeros[fin]=numeros[max];
+        numeros[max]=temp;
+
+        inicio++;
+        fin--;
+
+        actualizar();
+        mostrar();
+
+        await new Promise(r=>setTimeout(r,800));
+    }
+}
+
+mostrar();
+
+</script>
+
+</body>
+</html>
